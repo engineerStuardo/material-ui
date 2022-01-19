@@ -1,5 +1,6 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, useScrollTrigger } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -14,15 +15,26 @@ function ElevationScroll(props) {
   });
 }
 
+const useStyle = makeStyles(theme => ({
+  tollbarMargin: {
+    ...theme.mixins.toolbar,
+  },
+}));
+
 const Header = () => {
+  const classes = useStyle();
+
   return (
-    <ElevationScroll>
-      <AppBar position='fixed' color='primary'>
-        <Toolbar>
-          <Typography variant='h3'>Arc Development</Typography>
-        </Toolbar>
-      </AppBar>
-    </ElevationScroll>
+    <>
+      <ElevationScroll>
+        <AppBar position='fixed' color='primary'>
+          <Toolbar>
+            <Typography variant='h3'>Arc Development</Typography>
+          </Toolbar>
+        </AppBar>
+      </ElevationScroll>
+      <div className={classes.tollbarMargin} />
+    </>
   );
 };
 
