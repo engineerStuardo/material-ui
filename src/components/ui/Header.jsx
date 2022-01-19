@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, useScrollTrigger } from '@mui/material';
+import { AppBar, Toolbar, useScrollTrigger, Tabs, Tab } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 import logo from '../../assets/logo.svg';
@@ -25,6 +25,17 @@ const useStyle = makeStyles(theme => ({
   logo: {
     height: '7em',
   },
+  tabContainer: {
+    marginLeft: 'auto',
+  },
+  tab: {
+    '&.MuiButtonBase-root.MuiTab-root': {
+      ...theme.typography.tab,
+      color: 'white',
+      minWidth: 10,
+      marginLeft: '25px',
+    },
+  },
 }));
 
 const Header = () => {
@@ -36,6 +47,13 @@ const Header = () => {
         <AppBar position='fixed' color='primary'>
           <Toolbar disableGutters>
             <img src={logo} alt='componay logo' className={classes.logo} />
+            <Tabs className={classes.tabContainer}>
+              <Tab label='Home' className={classes.tab} />
+              <Tab label='Services' className={classes.tab} />
+              <Tab label='The Revolution' className={classes.tab} />
+              <Tab label='About Us' className={classes.tab} />
+              <Tab label='Contact Us' className={classes.tab} />
+            </Tabs>
           </Toolbar>
         </AppBar>
       </ElevationScroll>
