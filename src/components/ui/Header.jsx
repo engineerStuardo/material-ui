@@ -1,6 +1,8 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, useScrollTrigger } from '@mui/material';
+import { AppBar, Toolbar, useScrollTrigger } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+
+import logo from '../../assets/logo.svg';
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -18,6 +20,10 @@ function ElevationScroll(props) {
 const useStyle = makeStyles(theme => ({
   tollbarMargin: {
     ...theme.mixins.toolbar,
+    marginBottom: '3em',
+  },
+  logo: {
+    height: '7em',
   },
 }));
 
@@ -28,8 +34,8 @@ const Header = () => {
     <>
       <ElevationScroll>
         <AppBar position='fixed' color='primary'>
-          <Toolbar>
-            <Typography variant='h3'>Arc Development</Typography>
+          <Toolbar disableGutters>
+            <img src={logo} alt='componay logo' className={classes.logo} />
           </Toolbar>
         </AppBar>
       </ElevationScroll>
