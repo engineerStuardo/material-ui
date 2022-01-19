@@ -19,7 +19,7 @@ const Header = () => {
     <ElevationScroll>
       <AppBar position='fixed' color='primary'>
         <Toolbar>
-          <Typography variant='h6'>Arc Development</Typography>
+          <Typography variant='h3'>Arc Development</Typography>
         </Toolbar>
       </AppBar>
     </ElevationScroll>
