@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -31,7 +31,7 @@ const useStyle = makeStyles(theme => ({
     marginBottom: '3em',
   },
   logo: {
-    height: '7em',
+    height: '8em',
   },
   tabContainer: {
     marginLeft: 'auto',
@@ -51,6 +51,12 @@ const useStyle = makeStyles(theme => ({
     marginLeft: '50px !important',
     marginRight: '25px !important',
   },
+  logo_container: {
+    padding: '0 !important',
+    '&:hover': {
+      backgroundColor: 'transparent !important',
+    },
+  },
 }));
 
 const Header = () => {
@@ -61,12 +67,38 @@ const Header = () => {
     setValue(value);
   };
 
+  useEffect(() => {
+    if (window.location.pathname === '/' && value !== 0) {
+      setValue(0);
+    }
+    if (window.location.pathname === '/services' && value !== 1) {
+      setValue(1);
+    }
+    if (window.location.pathname === '/revolution' && value !== 2) {
+      setValue(2);
+    }
+    if (window.location.pathname === '/about' && value !== 3) {
+      setValue(3);
+    }
+    if (window.location.pathname === '/contact' && value !== 4) {
+      setValue(4);
+    }
+  }, [value]);
+
   return (
     <>
       <ElevationScroll>
         <AppBar position='fixed' color='primary'>
           <Toolbar disableGutters>
-            <img src={logo} alt='componay logo' className={classes.logo} />
+            <Button
+              component={Link}
+              to='/'
+              className={classes.logo_container}
+              onClick={() => setValue(0)}
+              disableRipple
+            >
+              <img src={logo} alt='componay logo' className={classes.logo} />
+            </Button>
             <Tabs
               value={value}
               onChange={handleChange}
