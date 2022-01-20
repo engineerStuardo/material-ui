@@ -1,5 +1,12 @@
 import React from 'react';
-import { AppBar, Toolbar, useScrollTrigger, Tabs, Tab } from '@mui/material';
+import {
+  AppBar,
+  Toolbar,
+  useScrollTrigger,
+  Tabs,
+  Tab,
+  Button,
+} from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 import logo from '../../assets/logo.svg';
@@ -31,10 +38,17 @@ const useStyle = makeStyles(theme => ({
   tab: {
     '&.MuiButtonBase-root.MuiTab-root': {
       ...theme.typography.tab,
-      color: 'white',
+      color: 'white !important',
       minWidth: 10,
       marginLeft: '25px',
     },
+  },
+  button: {
+    ...theme.typography.estimate,
+    borderRadius: '50px !important',
+    height: '45px !important',
+    marginLeft: '50px !important',
+    marginRight: '25px !important',
   },
 }));
 
@@ -54,6 +68,13 @@ const Header = () => {
               <Tab label='About Us' className={classes.tab} />
               <Tab label='Contact Us' className={classes.tab} />
             </Tabs>
+            <Button
+              variant='contained'
+              color='secondary'
+              className={classes.button}
+            >
+              Free Estimate
+            </Button>
           </Toolbar>
         </AppBar>
       </ElevationScroll>

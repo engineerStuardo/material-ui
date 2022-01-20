@@ -23,5 +23,11 @@ export const theme = createTheme({
       fontWeight: 700,
       fontSize: '1rem',
     },
+    estimate: {
+      fontFamily: 'Pacifico !important',
+      fontSize: '1rem !important',
+      textTransform: 'none !important',
+      color: 'white !important',
+    },
   },
 });
