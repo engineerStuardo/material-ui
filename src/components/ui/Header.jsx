@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -8,6 +8,7 @@ import {
   Button,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { Link } from 'react-router-dom';
 
 import logo from '../../assets/logo.svg';
 
@@ -54,6 +55,11 @@ const useStyle = makeStyles(theme => ({
 
 const Header = () => {
   const classes = useStyle();
+  const [value, setValue] = useState(0);
+
+  const handleChange = (e, value) => {
+    setValue(value);
+  };
 
   return (
     <>
@@ -61,12 +67,42 @@ const Header = () => {
         <AppBar position='fixed' color='primary'>
           <Toolbar disableGutters>
             <img src={logo} alt='componay logo' className={classes.logo} />
-            <Tabs className={classes.tabContainer}>
-              <Tab label='Home' className={classes.tab} />
-              <Tab label='Services' className={classes.tab} />
-              <Tab label='The Revolution' className={classes.tab} />
-              <Tab label='About Us' className={classes.tab} />
-              <Tab label='Contact Us' className={classes.tab} />
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              className={classes.tabContainer}
+              indicatorColor='secondary'
+            >
+              <Tab
+                label='Home'
+                className={classes.tab}
+                component={Link}
+                to='/'
+              />
+              <Tab
+                label='Services'
+                className={classes.tab}
+                component={Link}
+                to='/services'
+              />
+              <Tab
+                label='The Revolution'
+                className={classes.tab}
+                component={Link}
+                to='/revolution'
+              />
+              <Tab
+                label='About Us'
+                className={classes.tab}
+                component={Link}
+                to='/about'
+              />
+              <Tab
+                label='Contact Us'
+                className={classes.tab}
+                component={Link}
+                to='/contact'
+              />
             </Tabs>
             <Button
               variant='contained'
