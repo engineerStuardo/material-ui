@@ -127,6 +127,18 @@ const Header = () => {
     if (window.location.pathname === '/contact' && value !== 4) {
       setValue(4);
     }
+    if (window.location.pathname === '/customsoftware' && value !== 1) {
+      setValue(1);
+      setSelectedIndex(1);
+    }
+    if (window.location.pathname === '/mobileapps' && value !== 1) {
+      setValue(1);
+      setSelectedIndex(2);
+    }
+    if (window.location.pathname === '/websites' && value !== 1) {
+      setValue(1);
+      setSelectedIndex(3);
+    }
   }, [value]);
 
   return (
