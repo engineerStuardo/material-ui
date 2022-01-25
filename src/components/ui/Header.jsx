@@ -12,6 +12,9 @@ import {
   useTheme,
   SwipeableDrawer,
   IconButton,
+  List,
+  ListItem,
+  ListItemText,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { Link } from 'react-router-dom';
@@ -102,6 +105,16 @@ const useStyle = makeStyles(theme => ({
     width: '50px !important',
     color: 'white !important',
     marginRight: '30px !important',
+  },
+  drawer: {
+    backgroundColor: `${theme.palette.common.blue} !important`,
+  },
+  drawerItem: {
+    ...theme.typography.tab,
+    color: 'white ',
+  },
+  drawerEstimate: {
+    backgroundColor: theme.palette.common.orange,
   },
 }));
 
@@ -262,8 +275,70 @@ const Header = () => {
         open={openDrawer}
         onClose={() => setOpenDrawer(false)}
         onOpen={() => setOpenDrawer(true)}
+        classes={{ paper: classes.drawer }}
       >
-        example drawer
+        <List disablePadding>
+          <ListItem
+            onClick={() => setOpenDrawer(false)}
+            divider
+            button
+            component={Link}
+            to='/'
+            className={classes.drawerItem}
+          >
+            <ListItemText disableTypography>Home</ListItemText>
+          </ListItem>
+          <ListItem
+            onClick={() => setOpenDrawer(false)}
+            divider
+            button
+            component={Link}
+            to='/services'
+            className={classes.drawerItem}
+          >
+            <ListItemText disableTypography>Services</ListItemText>
+          </ListItem>
+          <ListItem
+            onClick={() => setOpenDrawer(false)}
+            divider
+            button
+            component={Link}
+            to='/revolution'
+            className={classes.drawerItem}
+          >
+            <ListItemText disableTypography>The Revolution</ListItemText>
+          </ListItem>
+          <ListItem
+            onClick={() => setOpenDrawer(false)}
+            divider
+            button
+            component={Link}
+            to='/about'
+            className={classes.drawerItem}
+          >
+            <ListItemText disableTypography>About Us</ListItemText>
+          </ListItem>
+          <ListItem
+            onClick={() => setOpenDrawer(false)}
+            divider
+            button
+            component={Link}
+            to='/contact'
+            className={classes.drawerItem}
+          >
+            <ListItemText disableTypography>Contact Us</ListItemText>
+          </ListItem>
+          <ListItem
+            onClick={() => setOpenDrawer(false)}
+            divider
+            button
+            component={Link}
+            to='/estimate'
+            className={[classes.drawerItem, classes.drawerEstimate]}
+          >
+            <ListItemText disableTypography>Free Estimate</ListItemText>
+          </ListItem>
+        </List>
       </SwipeableDrawer>
       <IconButton
         className={classes.drawerIconContainer}
