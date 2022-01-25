@@ -101,6 +101,7 @@ const useStyle = makeStyles(theme => ({
     height: '50px !important',
     width: '50px !important',
     color: 'white !important',
+    marginRight: '30px !important',
   },
 }));
 
@@ -137,7 +138,6 @@ const Header = () => {
     setAnchorEl(null);
     setOpenMenu(false);
     setSelectedIndex(i);
-    console.log(i);
   };
 
   const menuOptions = [
