@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Header from './ui/Header';
 import { theme } from './ui/Theme';
+import { Footer } from './ui/Footer';
 
 function App() {
   return (
@@ -20,13 +21,14 @@ function App() {
           <Route exact path='/contact' element={<Contact />} />
           <Route exact path='/estimate' element={<Estimate />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </ThemeProvider>
   );
 }
 
 const Home = () => {
-  return <div>HOME</div>;
+  return <div style={{ height: '2000px' }}>HOME</div>;
 };
 const Services = () => {
   return <div>Services</div>;
