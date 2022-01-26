@@ -21,7 +21,6 @@ import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import logo from '../../assets/logo.svg';
-import { WindowOutlined } from '@mui/icons-material';
 
 function ElevationScroll(props) {
   const { children } = props;
