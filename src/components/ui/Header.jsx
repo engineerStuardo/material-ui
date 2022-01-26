@@ -21,6 +21,7 @@ import { Link } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import logo from '../../assets/logo.svg';
+import { WindowOutlined } from '@mui/icons-material';
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -115,11 +116,17 @@ const useStyle = makeStyles(theme => ({
     opacity: 0.5,
   },
   drawerEstimate: {
+    ...theme.typography.tab,
+    color: 'white !important',
+    opacity: 0.5,
     backgroundColor: `${theme.palette.common.orange} !important`,
   },
   drawerItemSelected: {
     border: '1px solid white !important',
     opacity: `1 !important`,
+  },
+  appBar: {
+    zIndex: `${theme.zIndex.modal + 1} !important`,
   },
 }));
 
@@ -165,33 +172,30 @@ const Header = () => {
     { name: 'Websites Development', link: '/websites' },
   ];
 
+  const routes = [
+    { name: 'Home', link: '/' },
+    { name: 'Services', link: '/services' },
+    { name: 'Revolution', link: '/revolution' },
+    { name: 'About Us', link: '/about' },
+    { name: 'Contact Us', link: '/contact' },
+  ];
+
   useEffect(() => {
-    if (window.location.pathname === '/' && value !== 0) {
-      setValue(0);
-    }
-    if (window.location.pathname === '/services' && value !== 1) {
-      setValue(1);
-    }
-    if (window.location.pathname === '/revolution' && value !== 2) {
-      setValue(2);
-    }
-    if (window.location.pathname === '/about' && value !== 3) {
-      setValue(3);
-    }
-    if (window.location.pathname === '/contact' && value !== 4) {
-      setValue(4);
-    }
-    if (window.location.pathname === '/customsoftware' && value !== 1) {
-      setValue(1);
-      setSelectedIndex(1);
-    }
-    if (window.location.pathname === '/mobileapps' && value !== 1) {
-      setValue(1);
-      setSelectedIndex(2);
-    }
-    if (window.location.pathname === '/websites' && value !== 1) {
-      setValue(1);
-      setSelectedIndex(3);
+    routes.map((item, index) => {
+      if (window.location.pathname === item.link && value !== index) {
+        setValue(index);
+      }
+    });
+
+    menuOptions.map((item, index) => {
+      if (window.location.pathname === item.link && value !== 1) {
+        setValue(1);
+        setSelectedIndex(index);
+      }
+    });
+
+    if (window.location.pathname === '/estimate' && value !== 5) {
+      setValue(5);
     }
   }, [value]);
 
@@ -203,36 +207,30 @@ const Header = () => {
         className={classes.tabContainer}
         indicatorColor='secondary'
       >
-        <Tab label='Home' className={classes.tab} component={Link} to='/' />
-        <Tab
-          id='basic-button'
-          aria-controls={anchorEl ? 'simple-menu' : undefined}
-          aria-haspopup={anchorEl ? 'true' : undefined}
-          aria-expanded={anchorEl ? 'true' : undefined}
-          label='Services'
-          className={classes.tab}
-          component={Link}
-          to='/services'
-          onMouseOver={e => handleClick(e)}
-        />
-        <Tab
-          label='The Revolution'
-          className={classes.tab}
-          component={Link}
-          to='/revolution'
-        />
-        <Tab
-          label='About Us'
-          className={classes.tab}
-          component={Link}
-          to='/about'
-        />
-        <Tab
-          label='Contact Us'
-          className={classes.tab}
-          component={Link}
-          to='/contact'
-        />
+        {routes.map(item =>
+          item.name !== 'Services' ? (
+            <Tab
+              key={item.name}
+              label={item.name}
+              className={classes.tab}
+              component={Link}
+              to={item.link}
+            />
+          ) : (
+            <Tab
+              key={item.name}
+              id='basic-button'
+              aria-controls={anchorEl ? 'simple-menu' : undefined}
+              aria-haspopup={anchorEl ? 'true' : undefined}
+              aria-expanded={anchorEl ? 'true' : undefined}
+              onMouseOver={e => handleClick(e)}
+              label={item.name}
+              className={classes.tab}
+              component={Link}
+              to={item.link}
+            />
+          )
+        )}
       </Tabs>
       <Button variant='contained' color='secondary' className={classes.button}>
         Free Estimate
@@ -248,6 +246,8 @@ const Header = () => {
           'aria-labelledby': 'basic-button',
           onMouseLeave: handleClose,
         }}
+        keepMounted
+        style={{ zIndex: 1302 }}
       >
         {menuOptions.map((option, index) => (
           <MenuItem
@@ -282,82 +282,26 @@ const Header = () => {
         onOpen={() => setOpenDrawer(true)}
         classes={{ paper: classes.drawer }}
       >
+        <div className={classes.tollbarMargin}></div>
         <List disablePadding>
-          <ListItem
-            onClick={() => {
-              setOpenDrawer(false);
-              setValue(0);
-            }}
-            divider
-            button
-            component={Link}
-            to='/'
-            classes={{ selected: classes.drawerItemSelected }}
-            className={classes.drawerItem}
-            selected={value === 0}
-          >
-            <ListItemText disableTypography>Home</ListItemText>
-          </ListItem>
-          <ListItem
-            onClick={() => {
-              setOpenDrawer(false);
-              setValue(1);
-            }}
-            divider
-            button
-            component={Link}
-            to='/services'
-            classes={{ selected: classes.drawerItemSelected }}
-            className={classes.drawerItem}
-            selected={value === 1}
-          >
-            <ListItemText disableTypography>Services</ListItemText>
-          </ListItem>
-          <ListItem
-            onClick={() => {
-              setOpenDrawer(false);
-              setValue(2);
-            }}
-            divider
-            button
-            component={Link}
-            to='/revolution'
-            classes={{ selected: classes.drawerItemSelected }}
-            className={classes.drawerItem}
-            selected={value === 2}
-          >
-            <ListItemText disableTypography>The Revolution</ListItemText>
-          </ListItem>
-          <ListItem
-            onClick={() => {
-              setOpenDrawer(false);
-              setValue(3);
-            }}
-            divider
-            button
-            component={Link}
-            to='/about'
-            classes={{ selected: classes.drawerItemSelected }}
-            className={classes.drawerItem}
-            selected={value === 3}
-          >
-            <ListItemText disableTypography>About Us</ListItemText>
-          </ListItem>
-          <ListItem
-            onClick={() => {
-              setOpenDrawer(false);
-              setValue(4);
-            }}
-            divider
-            button
-            component={Link}
-            to='/contact'
-            classes={{ selected: classes.drawerItemSelected }}
-            className={classes.drawerItem}
-            selected={value === 4}
-          >
-            <ListItemText disableTypography>Contact Us</ListItemText>
-          </ListItem>
+          {routes.map((item, index) => (
+            <ListItem
+              key={index}
+              onClick={() => {
+                setOpenDrawer(false);
+                setValue(index);
+              }}
+              divider
+              button
+              component={Link}
+              to={item.link}
+              classes={{ selected: classes.drawerItemSelected }}
+              className={classes.drawerItem}
+              selected={value === index}
+            >
+              <ListItemText disableTypography>{item.name}</ListItemText>
+            </ListItem>
+          ))}
           <ListItem
             onClick={() => {
               setOpenDrawer(false);
@@ -368,7 +312,7 @@ const Header = () => {
             component={Link}
             to='/estimate'
             classes={{ selected: classes.drawerItemSelected }}
-            className={[classes.drawerItem, classes.drawerEstimate]}
+            className={classes.drawerEstimate}
             selected={value === 5}
           >
             <ListItemText disableTypography>Free Estimate</ListItemText>
@@ -388,7 +332,7 @@ const Header = () => {
   return (
     <>
       <ElevationScroll>
-        <AppBar position='fixed' color='primary'>
+        <AppBar position='fixed' color='primary' className={classes.appBar}>
           <Toolbar disableGutters>
             <Button
               component={Link}
