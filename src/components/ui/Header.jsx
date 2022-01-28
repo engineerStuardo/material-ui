@@ -129,7 +129,7 @@ const useStyle = makeStyles(theme => ({
   },
 }));
 
-const Header = () => {
+const Header = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
   const classes = useStyle();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('lg'));
@@ -138,10 +138,8 @@ const Header = () => {
     typeof navigator !== 'undefined' &&
     /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-  const [value, setValue] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const [openDrawer, setOpenDrawer] = useState(false);
 
   const handleChange = (e, newValue) => {
