@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -162,29 +162,33 @@ const Header = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
     setSelectedIndex(i);
   };
 
-  const menuOptions = [
-    { name: 'Services', link: '/services' },
-    { name: 'Custom Software Development', link: '/customsoftware' },
-    { name: 'Mobile App Development', link: '/mobileapps' },
-    { name: 'Websites Development', link: '/websites' },
-  ];
+  const menuOptions = useMemo(() => {
+    return [
+      { name: 'Services', link: '/services' },
+      { name: 'Custom Software Development', link: '/customsoftware' },
+      { name: 'Mobile App Development', link: '/mobileapps' },
+      { name: 'Websites Development', link: '/websites' },
+    ];
+  }, []);
 
-  const routes = [
-    { name: 'Home', link: '/' },
-    { name: 'Services', link: '/services' },
-    { name: 'Revolution', link: '/revolution' },
-    { name: 'About Us', link: '/about' },
-    { name: 'Contact Us', link: '/contact' },
-  ];
+  const routes = useMemo(() => {
+    return [
+      { name: 'Home', link: '/' },
+      { name: 'Services', link: '/services' },
+      { name: 'Revolution', link: '/revolution' },
+      { name: 'About Us', link: '/about' },
+      { name: 'Contact Us', link: '/contact' },
+    ];
+  }, []);
 
   useEffect(() => {
-    routes.map((item, index) => {
+    routes.forEach((item, index) => {
       if (window.location.pathname === item.link && value !== index) {
         setValue(index);
       }
     });
 
-    menuOptions.map((item, index) => {
+    menuOptions.forEach((item, index) => {
       if (window.location.pathname === item.link && value !== 1) {
         setValue(1);
         setSelectedIndex(index);
@@ -194,7 +198,7 @@ const Header = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
     if (window.location.pathname === '/estimate' && value !== 5) {
       setValue(5);
     }
-  }, [value]);
+  }, [value, routes, setValue, setSelectedIndex, menuOptions]);
 
   const tabs = (
     <>
