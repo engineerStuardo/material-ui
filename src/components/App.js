@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from './ui/Header';
 import { theme } from './ui/Theme';
 import { Footer } from './ui/Footer';
+import { LandingPage } from './LandingPage';
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -20,7 +21,7 @@ function App() {
           setSelectedIndex={setSelectedIndex}
         />
         <Routes>
-          <Route exact path='/' element={<Home />} />
+          <Route exact path='/' element={<LandingPage />} />
           <Route exact path='/services' element={<Services />} />
           <Route exact path='/customsoftware' element={<CustomSoftware />} />
           <Route exact path='/mobileapps' element={<MobileApps />} />
@@ -36,9 +37,6 @@ function App() {
   );
 }
 
-const Home = () => {
-  return <div style={{ height: '2000px' }}>HOME</div>;
-};
 const Services = () => {
   return <div>Services</div>;
 };
