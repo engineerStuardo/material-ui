@@ -3,6 +3,9 @@ import { Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 import footerAdornment from '../../assets/Footer Adornment.svg';
+import facebook from '../../assets/facebook.svg';
+import twitter from '../../assets/twitter.svg';
+import instagram from '../../assets/instagram.svg';
 
 const useStyles = makeStyles(theme => ({
   footer: {
@@ -23,6 +26,9 @@ const useStyles = makeStyles(theme => ({
   },
   mainContainer: {
     position: 'absolute',
+    [theme.breakpoints.down('lg')]: {
+      display: 'none !important',
+    },
   },
   link: {
     color: 'white',
@@ -34,10 +40,40 @@ const useStyles = makeStyles(theme => ({
   gridItem: {
     margin: '3em !important',
   },
+  icon: {
+    height: '4em',
+    width: '4em',
+    [theme.breakpoints.down('lg')]: {
+      height: '2.5em',
+      width: '2.5em',
+    },
+  },
+  socialContainer: {
+    position: 'absolute',
+    right: '1.5em',
+    bottom: '1em',
+    [theme.breakpoints.down('lg')]: {
+      right: '0.6em',
+    },
+  },
 }));
 
 export const Footer = ({ setValue, setSelectedIndex }) => {
   const classes = useStyles();
+
+  const socialIcons = [
+    {
+      name: facebook,
+      href: 'https://www.facebook.com',
+      alt: 'facebook logo',
+    },
+    { name: twitter, href: 'https://www.twitter.com', alt: 'twitter logo' },
+    {
+      name: instagram,
+      href: 'https://www.instagram.com',
+      alt: 'instagram logo',
+    },
+  ];
 
   return (
     <footer className={classes.footer}>
@@ -197,6 +233,24 @@ export const Footer = ({ setValue, setSelectedIndex }) => {
         src={footerAdornment}
         className={classes.adornment}
       />
+      <Grid
+        container
+        className={classes.socialContainer}
+        justifyContent='flex-end'
+        spacing={1}
+      >
+        {socialIcons.map(info => (
+          <Grid
+            item
+            component={'a'}
+            href={info.href}
+            rel='noopener noreferrer'
+            targt='_blank'
+          >
+            <img src={info.name} alt={info.alt} className={classes.icon} />
+          </Grid>
+        ))}
+      </Grid>
     </footer>
   );
 };
