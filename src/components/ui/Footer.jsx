@@ -239,8 +239,9 @@ export const Footer = ({ setValue, setSelectedIndex }) => {
         justifyContent='flex-end'
         spacing={1}
       >
-        {socialIcons.map(info => (
+        {socialIcons.map((info, index) => (
           <Grid
+            key={index}
             item
             component={'a'}
             href={info.href}
