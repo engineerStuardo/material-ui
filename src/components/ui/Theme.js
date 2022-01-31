@@ -2,6 +2,7 @@ import { createTheme } from '@mui/material/styles';
 
 const arcBlue = '#0B72B2';
 const arcOrange = '#FFBA60';
+const arcGrey = '#868686';
 
 export const theme = createTheme({
   palette: {
@@ -35,6 +36,31 @@ export const theme = createTheme({
       fontSize: '2.5rem',
       color: `${arcBlue}`,
       lineHeight: 1.5,
+    },
+    h3: {
+      fontFamily: 'Pacifico',
+      fontSize: '2.5rem',
+      color: arcBlue,
+    },
+    h4: {
+      fontFamily: 'Raleway',
+      fontSize: '1.75rem',
+      color: arcBlue,
+      fontWeight: 700,
+    },
+    subtitle1: {
+      fontSize: '1.25rem',
+      fontWeight: 300,
+      color: arcGrey,
+    },
+    learnButton: {
+      borderColor: `${arcBlue} !important`,
+      color: `${arcBlue} !important`,
+      borderWidth: '2px !important',
+      textTransform: 'none !important',
+      borderRadius: '50px !important',
+      fontFamily: 'Roboto !important',
+      fontWeight: 'bold !important',
     },
   },
 });
