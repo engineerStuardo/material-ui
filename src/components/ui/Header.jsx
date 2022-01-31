@@ -169,7 +169,7 @@ const Header = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
     return [
       { name: 'Services', link: '/services' },
       { name: 'Custom Software Development', link: '/customsoftware' },
-      { name: 'Mobile App Development', link: '/mobileapps' },
+      { name: 'iOS/Android Development', link: '/mobileapps' },
       { name: 'Websites Development', link: '/websites' },
     ];
   }, []);

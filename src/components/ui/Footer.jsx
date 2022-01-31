@@ -127,7 +127,7 @@ export const Footer = ({ setValue, setSelectedIndex }) => {
                 setSelectedIndex(2);
               }}
             >
-              Mobile App Development
+              iOS/Android App Development
             </Grid>
             <Grid
               item
