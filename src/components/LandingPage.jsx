@@ -15,6 +15,7 @@ import customSoftwareIcon from '../assets/Custom Software Icon.svg';
 import mobileAppsIcon from '../assets/mobileIcon.svg';
 import websiteIcon from '../assets/websiteIcon.svg';
 import revolutionBackground from '../assets/repeatingBackground.svg';
+import infoBackground from '../assets/infoBackground.svg';
 
 const useStyles = makeStyles(theme => ({
   animation: {
@@ -106,12 +107,25 @@ const useStyles = makeStyles(theme => ({
       borderRadius: '0px',
     },
   },
+  infoBackground: {
+    backgroundImage: `url(${infoBackground})`,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    height: '100%',
+    width: '100%',
+  },
+  infoButton: {
+    color: 'white !important',
+    borderColor: 'white !important',
+  },
 }));
 
 export const LandingPage = () => {
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
+  const matchesSMLL = useMediaQuery(theme.breakpoints.down('sm'));
 
   const defaultOptions = {
     loop: true,
@@ -121,8 +135,6 @@ export const LandingPage = () => {
       preserveAspectRatio: 'xMidYMid slice',
     },
   };
-
-  console.log(matchesSM);
 
   return (
     <>
@@ -337,6 +349,82 @@ export const LandingPage = () => {
           </Grid>
         </Grid>
         {/* ----------------- */}
+        {/* Information block */}
+        <Grid item>
+          <Grid
+            container
+            direction={'row'}
+            style={{ height: '80em' }}
+            alignItems='center'
+          >
+            <Grid
+              item
+              container
+              style={{
+                position: 'absolute',
+                textAlign: matchesSMLL ? 'center' : 'inherit',
+              }}
+              direction={matchesSM ? 'column' : 'row'}
+            >
+              <Grid
+                item
+                style={{
+                  marginLeft: matchesSMLL ? 0 : matchesSM ? '2em' : '5em',
+                }}
+                sm
+              >
+                <Grid container direction={'column'}>
+                  <Typography variant='h2' style={{ color: 'white' }}>
+                    About Us
+                  </Typography>
+                  <Typography variant='subtitle2'>
+                    Let's get personal.
+                  </Typography>
+                  <Grid item>
+                    <Button
+                      variant='outlined'
+                      className={`${classes.learnButtonHero} ${classes.infoButton}`}
+                    >
+                      <span style={{ marginRight: '10px' }}>Learn More</span>
+                      <ButtonArrow width={15} height={15} fill={'white'} />
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid
+                item
+                style={{
+                  marginRight: matchesSMLL ? 0 : matchesSM ? '2em' : '5em',
+                  textAlign: matchesSMLL ? 'center' : 'right',
+                  marginTop: matchesSMLL ? '5em' : '',
+                }}
+                sm
+              >
+                <Grid container direction={'column'}>
+                  <Typography variant='h2' style={{ color: 'white' }}>
+                    Contact Us
+                  </Typography>
+                  <Typography variant='subtitle2'>
+                    Say hello!{' '}
+                    <span role={'img'} aria-label='waving hand'>
+                      👋🏻
+                    </span>
+                  </Typography>
+                  <Grid item>
+                    <Button
+                      variant='outlined'
+                      className={`${classes.learnButtonHero} ${classes.infoButton}`}
+                    >
+                      <span style={{ marginRight: '10px' }}>Learn More</span>
+                      <ButtonArrow width={15} height={15} fill={'white'} />
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+            <div className={classes.infoBackground} />
+          </Grid>
+        </Grid>
       </Grid>
     </>
   );
