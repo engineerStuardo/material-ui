@@ -1,5 +1,6 @@
 import { Grid, Typography, Button, useMediaQuery } from '@mui/material';
 import { makeStyles, useTheme } from '@mui/styles';
+import { Link } from 'react-router-dom';
 
 import ButtonArrow from './ButtonArrow';
 import background from '../../assets/background.jpg';
@@ -38,10 +39,13 @@ const useStyles = makeStyles(theme => ({
       marginLeft: '0 !important',
       marginTop: '2em !important',
     },
+    '&:hover': {
+      backgroundColor: `${theme.palette.secondary.light} !important`,
+    },
   },
 }));
 
-export const CallToAction = () => {
+export const CallToAction = ({ setValue }) => {
   const classes = useStyles();
   const theme = useTheme();
   const matchesMD = useMediaQuery(theme.breakpoints.down('md'));
@@ -75,7 +79,13 @@ export const CallToAction = () => {
               item
               justifyContent={matchesMD ? 'center' : 'inherit'}
             >
-              <Button variant='outlined' className={classes.learnButtonHero}>
+              <Button
+                variant='outlined'
+                className={classes.learnButtonHero}
+                component={Link}
+                to='/revolution'
+                onClick={() => setValue(2)}
+              >
                 <span style={{ marginRight: '5px' }}>Learn More</span>
                 <ButtonArrow
                   width={15}
@@ -88,7 +98,13 @@ export const CallToAction = () => {
         </Grid>
       </Grid>
       <Grid item>
-        <Button variant='contained' className={classes.estimateButton}>
+        <Button
+          variant='contained'
+          className={classes.estimateButton}
+          component={Link}
+          to='/estimate'
+          onClick={() => setValue(5)}
+        >
           Free Estimate
         </Button>
       </Grid>

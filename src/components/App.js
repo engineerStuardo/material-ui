@@ -11,17 +11,28 @@ function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [value, setValue] = useState(0);
 
+  const headerProps = {
+    value,
+    setValue,
+    selectedIndex,
+    setSelectedIndex,
+  };
+
+  const landingFooterProps = {
+    setValue,
+    setSelectedIndex,
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <Header
-          value={value}
-          setValue={setValue}
-          selectedIndex={selectedIndex}
-          setSelectedIndex={setSelectedIndex}
-        />
+        <Header {...headerProps} />
         <Routes>
-          <Route exact path='/' element={<LandingPage />} />
+          <Route
+            exact
+            path='/'
+            element={<LandingPage {...landingFooterProps} />}
+          />
           <Route exact path='/services' element={<Services />} />
           <Route exact path='/customsoftware' element={<CustomSoftware />} />
           <Route exact path='/mobileapps' element={<MobileApps />} />
@@ -31,7 +42,7 @@ function App() {
           <Route exact path='/contact' element={<Contact />} />
           <Route exact path='/estimate' element={<Estimate />} />
         </Routes>
-        <Footer setValue={setValue} setSelectedIndex={setSelectedIndex} />
+        <Footer {...landingFooterProps} />
       </BrowserRouter>
     </ThemeProvider>
   );
