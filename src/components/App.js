@@ -6,19 +6,20 @@ import Header from './ui/Header';
 import { theme } from './ui/Theme';
 import { Footer } from './ui/Footer';
 import { LandingPage } from './LandingPage';
+import { Services } from './Services';
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [value, setValue] = useState(0);
 
-  const headerProps = {
+  const valueSetProps = {
     value,
     setValue,
     selectedIndex,
     setSelectedIndex,
   };
 
-  const landingFooterProps = {
+  const setProps = {
     setValue,
     setSelectedIndex,
   };
@@ -26,14 +27,10 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <Header {...headerProps} />
+        <Header {...valueSetProps} />
         <Routes>
-          <Route
-            exact
-            path='/'
-            element={<LandingPage {...landingFooterProps} />}
-          />
-          <Route exact path='/services' element={<Services />} />
+          <Route exact path='/' element={<LandingPage {...setProps} />} />
+          <Route exact path='/services' element={<Services {...setProps} />} />
           <Route exact path='/customsoftware' element={<CustomSoftware />} />
           <Route exact path='/mobileapps' element={<MobileApps />} />
           <Route exact path='/websites' element={<WebSites />} />
@@ -42,15 +39,12 @@ function App() {
           <Route exact path='/contact' element={<Contact />} />
           <Route exact path='/estimate' element={<Estimate />} />
         </Routes>
-        <Footer {...landingFooterProps} />
+        <Footer {...setProps} />
       </BrowserRouter>
     </ThemeProvider>
   );
 }
 
-const Services = () => {
-  return <div>Services</div>;
-};
 const CustomSoftware = () => {
   return <div>Custom Software</div>;
 };
