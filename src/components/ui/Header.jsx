@@ -273,6 +273,7 @@ const Header = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
               root: classes.menuItem,
               selected: classes.menuItemSelected,
             }}
+            style={{ color: 'white', opacity: 0.8 }}
             component={Link}
             to={option.link}
           >
