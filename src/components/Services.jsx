@@ -12,6 +12,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: '10em !important',
     [theme.breakpoints.down('md')]: {
       padding: '25px',
+      width: '25em !important',
     },
   },
   subtitle: {
@@ -35,7 +36,12 @@ export const Services = ({ setValue, setSelectedIndex }) => {
   const matchesMD = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <Grid container direction={'column'}>
+    <Grid
+      container
+      direction={'column'}
+      justifyContent={matchesMD && 'center'}
+      alignItems={matchesMD && 'center'}
+    >
       <Grid
         item
         marginLeft={matchesMD ? 0 : '5em'}
@@ -65,7 +71,9 @@ export const Services = ({ setValue, setSelectedIndex }) => {
               textAlign: matchesMD && 'center',
             }}
           >
-            <Typography variant='h4'>iOS/Android App Development</Typography>
+            <Typography variant='h4' marginBottom={'1em'}>
+              iOS/Android App Development
+            </Typography>
             <Typography variant='subtitle1' className={classes.subtitle}>
               Extend Functionality. Extend Access. Increase Engagement.
             </Typography>
@@ -110,7 +118,9 @@ export const Services = ({ setValue, setSelectedIndex }) => {
             textAlign: matchesMD && 'center',
           }}
         >
-          <Typography variant='h4'>Custom Software Development</Typography>
+          <Typography variant='h4' marginBottom={'1em'}>
+            Custom Software Development
+          </Typography>
           <Typography variant='subtitle1' className={classes.subtitle}>
             Save Energy. Save Time. Save Money.
           </Typography>
@@ -156,7 +166,9 @@ export const Services = ({ setValue, setSelectedIndex }) => {
               textAlign: matchesMD && 'center',
             }}
           >
-            <Typography variant='h4'>Website Development</Typography>
+            <Typography variant='h4' marginBottom={'1em'}>
+              Website Development
+            </Typography>
             <Typography variant='subtitle1' className={classes.subtitle}>
               Reach More. Discover More. Sell More.
             </Typography>
