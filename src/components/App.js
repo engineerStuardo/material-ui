@@ -7,6 +7,7 @@ import { theme } from './ui/Theme';
 import { Footer } from './ui/Footer';
 import { LandingPage } from './LandingPage';
 import { Services } from './Services';
+import { CustomSoftware } from './CustomSoftware';
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -31,7 +32,11 @@ function App() {
         <Routes>
           <Route exact path='/' element={<LandingPage {...setProps} />} />
           <Route exact path='/services' element={<Services {...setProps} />} />
-          <Route exact path='/customsoftware' element={<CustomSoftware />} />
+          <Route
+            exact
+            path='/customsoftware'
+            element={<CustomSoftware {...setProps} />}
+          />
           <Route exact path='/mobileapps' element={<MobileApps />} />
           <Route exact path='/websites' element={<WebSites />} />
           <Route exact path='/revolution' element={<Revolution />} />
@@ -45,9 +50,6 @@ function App() {
   );
 }
 
-const CustomSoftware = () => {
-  return <div>Custom Software</div>;
-};
 const MobileApps = () => {
   return <div>Mobile Apps</div>;
 };

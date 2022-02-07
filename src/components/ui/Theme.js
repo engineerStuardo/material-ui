@@ -67,5 +67,10 @@ export const theme = createTheme({
       fontFamily: 'Roboto !important',
       fontWeight: 'bold !important',
     },
+    body1: {
+      fontSize: '1.25rem',
+      color: arcGrey,
+      fontWeight: 300,
+    },
   },
 });
