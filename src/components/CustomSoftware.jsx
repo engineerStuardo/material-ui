@@ -42,7 +42,6 @@ const useStyles = makeStyles(theme => ({
 export const CustomSoftware = ({ setValue, setSelectedIndex }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const matchesXL = useMediaQuery(theme.breakpoints.down('xl'));
   const matchesLG = useMediaQuery(theme.breakpoints.down('lg'));
   const matchesMD = useMediaQuery(theme.breakpoints.down('md'));
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
@@ -231,10 +230,6 @@ export const CustomSoftware = ({ setValue, setSelectedIndex }) => {
         direction={matchesLG ? 'column' : 'row'}
         alignItems={matchesLG ? 'center' : undefined}
         className={classes.rowContainer}
-        style={{
-          paddingRight: !matchesXL ? '20em' : undefined,
-          paddingLeft: !matchesXL ? '20em' : undefined,
-        }}
       >
         <Grid
           item
@@ -371,8 +366,6 @@ export const CustomSoftware = ({ setValue, setSelectedIndex }) => {
         alignItems={matchesLG ? 'center' : undefined}
         className={classes.rowContainer}
         style={{
-          paddingRight: !matchesXL ? '20em' : undefined,
-          paddingLeft: !matchesXL ? '20em' : undefined,
           marginBottom: '20em',
         }}
       >
