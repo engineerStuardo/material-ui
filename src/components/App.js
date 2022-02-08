@@ -8,6 +8,7 @@ import { Footer } from './ui/Footer';
 import { LandingPage } from './LandingPage';
 import { Services } from './Services';
 import { CustomSoftware } from './CustomSoftware';
+import { MobileApps } from './MobileApps';
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -37,7 +38,11 @@ function App() {
             path='/customsoftware'
             element={<CustomSoftware {...setProps} />}
           />
-          <Route exact path='/mobileapps' element={<MobileApps />} />
+          <Route
+            exact
+            path='/mobileapps'
+            element={<MobileApps {...setProps} />}
+          />
           <Route exact path='/websites' element={<WebSites />} />
           <Route exact path='/revolution' element={<Revolution />} />
           <Route exact path='/about' element={<About />} />
@@ -50,9 +55,6 @@ function App() {
   );
 }
 
-const MobileApps = () => {
-  return <div>Mobile Apps</div>;
-};
 const WebSites = () => {
   return <div>Web Sites</div>;
 };
