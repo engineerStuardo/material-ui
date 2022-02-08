@@ -9,6 +9,7 @@ import { LandingPage } from './LandingPage';
 import { Services } from './Services';
 import { CustomSoftware } from './CustomSoftware';
 import { MobileApps } from './MobileApps';
+import { Websites } from './Websites';
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -43,7 +44,7 @@ function App() {
             path='/mobileapps'
             element={<MobileApps {...setProps} />}
           />
-          <Route exact path='/websites' element={<WebSites />} />
+          <Route exact path='/websites' element={<Websites {...setProps} />} />
           <Route exact path='/revolution' element={<Revolution />} />
           <Route exact path='/about' element={<About />} />
           <Route exact path='/contact' element={<Contact />} />
@@ -55,9 +56,6 @@ function App() {
   );
 }
 
-const WebSites = () => {
-  return <div>Web Sites</div>;
-};
 const Revolution = () => {
   return <div>Revolution</div>;
 };
