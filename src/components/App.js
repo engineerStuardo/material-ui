@@ -10,6 +10,7 @@ import { Services } from './Services';
 import { CustomSoftware } from './CustomSoftware';
 import { MobileApps } from './MobileApps';
 import { Websites } from './Websites';
+import { Revolution } from './Revolution';
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -45,7 +46,11 @@ function App() {
             element={<MobileApps {...setProps} />}
           />
           <Route exact path='/websites' element={<Websites {...setProps} />} />
-          <Route exact path='/revolution' element={<Revolution />} />
+          <Route
+            exact
+            path='/revolution'
+            element={<Revolution {...setProps} />}
+          />
           <Route exact path='/about' element={<About />} />
           <Route exact path='/contact' element={<Contact />} />
           <Route exact path='/estimate' element={<Estimate />} />
@@ -56,9 +61,6 @@ function App() {
   );
 }
 
-const Revolution = () => {
-  return <div>Revolution</div>;
-};
 const About = () => {
   return <div>About</div>;
 };
