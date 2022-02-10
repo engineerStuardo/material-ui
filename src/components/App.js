@@ -11,6 +11,7 @@ import { CustomSoftware } from './CustomSoftware';
 import { MobileApps } from './MobileApps';
 import { Websites } from './Websites';
 import { Revolution } from './Revolution';
+import { About } from './About';
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -51,7 +52,7 @@ function App() {
             path='/revolution'
             element={<Revolution {...setProps} />}
           />
-          <Route exact path='/about' element={<About />} />
+          <Route exact path='/about' element={<About {...setProps} />} />
           <Route exact path='/contact' element={<Contact />} />
           <Route exact path='/estimate' element={<Estimate />} />
         </Routes>
@@ -61,9 +62,6 @@ function App() {
   );
 }
 
-const About = () => {
-  return <div>About</div>;
-};
 const Contact = () => {
   return <div>Contact</div>;
 };
