@@ -78,4 +78,31 @@ export const theme = createTheme({
       color: arcGrey,
     },
   },
+  components: {
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          fontSize: '1rem',
+          color: `${arcBlue}`,
+        },
+      },
+    },
+    MuiInput: {
+      styleOverrides: {
+        underline: {
+          '&:before': {
+            borderBottom: `2px solid ${arcBlue}`,
+          },
+          '&:hover:not($disabled):not(focused):not($error):before': {
+            borderBottom: `2px solid ${arcBlue}`,
+          },
+        },
+        root: {
+          color: arcGrey,
+          fontWeight: 300,
+          fontSize: '1.25rem',
+        },
+      },
+    },
+  },
 });

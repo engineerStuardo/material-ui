@@ -12,6 +12,7 @@ import { MobileApps } from './MobileApps';
 import { Websites } from './Websites';
 import { Revolution } from './Revolution';
 import { About } from './About';
+import { Contact } from './Contact';
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -62,9 +63,6 @@ function App() {
   );
 }
 
-const Contact = () => {
-  return <div>Contact</div>;
-};
 const Estimate = () => {
   return <div>Estimate</div>;
 };
