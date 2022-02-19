@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { makeStyles, useTheme } from '@mui/styles';
 import {
   Grid,
@@ -6,6 +6,8 @@ import {
   useMediaQuery,
   TextField,
   Button,
+  Dialog,
+  DialogContent,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
@@ -66,6 +68,10 @@ const useStyle = makeStyles(theme => ({
     '&:hover': {
       backgroundColor: `${theme.palette.secondary.light} !important`,
     },
+    [theme.breakpoints.down('sm')]: {
+      height: 40,
+      width: 225,
+    },
   },
   disabledButton: {
     ...theme.typography.estimate,
@@ -84,11 +90,16 @@ export const Contact = ({ setValue }) => {
   const [message, setMessage] = useState('');
   const [emailHelper, setEmailHelper] = useState('');
   const [phoneHelper, setPhoneHelper] = useState('');
+  const [open, setOpen] = useState(false);
 
   const classes = useStyle();
   const theme = useTheme();
 
+  const matchesXL = useMediaQuery(theme.breakpoints.down('xl'));
   const matchesLG = useMediaQuery(theme.breakpoints.down('lg'));
+  const matchesMD = useMediaQuery(theme.breakpoints.down('md'));
+  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
 
   const onChange = e => {
     let valid;
@@ -244,7 +255,7 @@ export const Contact = ({ setValue }) => {
                   variant='standard'
                   label='Phone'
                   id='phone'
-                  phone={phone}
+                  value={phone}
                   onChange={onChange}
                   fullWidth
                   error={phoneHelper.length !== 0}
@@ -289,6 +300,7 @@ export const Contact = ({ setValue }) => {
                     ? classes.disabledButton
                     : classes.sendButton
                 }
+                onClick={() => setOpen(true)}
               >
                 Send Message{' '}
                 <img
@@ -301,6 +313,119 @@ export const Contact = ({ setValue }) => {
           </Grid>
         </Grid>
       </Grid>
+      <Dialog
+        fullScreen={matchesSM}
+        style={{ zIndex: 1302 }}
+        open={open}
+        onClose={() => setOpen(false)}
+        PaperProps={{
+          style: {
+            paddingTop: matchesMD ? '1em' : '5em',
+            paddingBottom: matchesMD ? '1em' : '5em',
+            paddingRight: matchesMD ? 0 : matchesLG ? '10em' : '20em',
+            paddingLeft: matchesMD ? 0 : matchesLG ? '10em' : '20em',
+          },
+        }}
+      >
+        <DialogContent>
+          <Grid container direction={'column'}>
+            <Grid item>
+              <Typography align='center' variant='h4' gutterBottom>
+                Confirm message
+              </Typography>
+            </Grid>
+            <Grid item>
+              <TextField
+                variant='standard'
+                className={classes.input}
+                label='Name'
+                id='name'
+                value={name}
+                onChange={e => setName(e.target.value)}
+                fullWidth
+              />
+            </Grid>
+            <Grid item>
+              <TextField
+                variant='standard'
+                label='Email'
+                id='email'
+                value={email}
+                onChange={onChange}
+                fullWidth
+                style={{ marginTop: '1em', marginBottom: '1em' }}
+                error={emailHelper.length !== 0}
+                helperText={emailHelper}
+              />
+            </Grid>
+            <Grid item>
+              <TextField
+                variant='standard'
+                label='Phone'
+                id='phone'
+                value={phone}
+                onChange={onChange}
+                fullWidth
+                error={phoneHelper.length !== 0}
+                helperText={phoneHelper}
+              />
+            </Grid>
+            <Grid item style={{ maxWidth: matchesMD ? '100%' : '30em' }}>
+              <TextField
+                className={classes.message}
+                value={message}
+                id='message'
+                multiline
+                rows={10}
+                onChange={e => setMessage(e.target.value)}
+                fullWidth
+              />
+            </Grid>
+          </Grid>
+          <Grid
+            item
+            container
+            direction={matchesSM ? 'column' : 'row'}
+            style={{ marginTop: '2em' }}
+            alignItems='center'
+          >
+            <Grid item style={{ fontWeight: 300 }}>
+              <Button onClick={() => setOpen(false)}>Cancel</Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant='contained'
+                disabled={
+                  name.length === 0 ||
+                  message.length === 0 ||
+                  phone.length === 0 ||
+                  phoneHelper.length !== 0 ||
+                  email.length === 0 ||
+                  emailHelper.length !== 0
+                }
+                className={
+                  name.length === 0 ||
+                  message.length === 0 ||
+                  phone.length === 0 ||
+                  phoneHelper.length !== 0 ||
+                  email.length === 0 ||
+                  emailHelper.length !== 0
+                    ? classes.disabledButton
+                    : classes.sendButton
+                }
+                onClick={() => setOpen(true)}
+              >
+                Send Message{' '}
+                <img
+                  style={{ marginLeft: '1em' }}
+                  src={airplane}
+                  alt='paper airplane'
+                />{' '}
+              </Button>
+            </Grid>
+          </Grid>
+        </DialogContent>
+      </Dialog>
       <Grid
         item
         container
