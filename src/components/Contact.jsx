@@ -1,5 +1,9 @@
-import { useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { makeStyles, useTheme } from '@mui/styles';
+import CircularProgress from '@mui/material/CircularProgress';
+import emailjs from '@emailjs/browser';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import {
   Grid,
   Typography,
@@ -8,6 +12,7 @@ import {
   Button,
   Dialog,
   DialogContent,
+  Box,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
@@ -17,6 +22,10 @@ import emailIcon from '../assets/email.svg';
 import airplane from '../assets/send.svg';
 import ButtonArrow from './ui/ButtonArrow';
 import mobileBackground from '../assets/mobileBackground.jpg';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
+});
 
 const useStyle = makeStyles(theme => ({
   background: {
@@ -91,15 +100,18 @@ export const Contact = ({ setValue }) => {
   const [emailHelper, setEmailHelper] = useState('');
   const [phoneHelper, setPhoneHelper] = useState('');
   const [open, setOpen] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [isShowingAlertSuccess, setIsShowingAlertSuccess] = useState(false);
+  const [isShowingAlertError, setIsShowingAlertError] = useState(false);
+
+  const form = useRef();
 
   const classes = useStyle();
   const theme = useTheme();
 
-  const matchesXL = useMediaQuery(theme.breakpoints.down('xl'));
   const matchesLG = useMediaQuery(theme.breakpoints.down('lg'));
   const matchesMD = useMediaQuery(theme.breakpoints.down('md'));
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
-  const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
 
   const onChange = e => {
     let valid;
@@ -133,8 +145,69 @@ export const Contact = ({ setValue }) => {
     }
   };
 
+  const sendEmail = e => {
+    e.preventDefault();
+
+    setIsSending(true);
+    emailjs
+      .sendForm(
+        'gmail',
+        'mui_template',
+        form.current,
+        'user_lPRJMH8W28Y3MU7AsB3IN'
+      )
+      .then(
+        result => {
+          console.log(result.text);
+          setTimeout(() => {
+            setIsShowingAlertSuccess(true);
+            setIsSending(false);
+            setOpen(false);
+            setName('');
+            setEmail('');
+            setPhone('');
+            setMessage('');
+            e.target.reset();
+          }, 3000);
+        },
+        error => {
+          console.log(error.text);
+          setIsShowingAlertError(true);
+          setIsSending(false);
+        }
+      );
+  };
+
+  const handleCloseSuccess = (event, reason) => {
+    setIsShowingAlertSuccess(false);
+  };
+
+  const handleCloseError = (event, reason) => {
+    setIsShowingAlertError(false);
+  };
+
   return (
     <Grid container direction={'row'}>
+      <Snackbar
+        open={isShowingAlertSuccess}
+        autoHideDuration={5000}
+        onClose={handleCloseSuccess}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert severity='success' sx={{ width: '100%' }}>
+          Email was successfully sent!!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={isShowingAlertError}
+        autoHideDuration={5000}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert severity='error' sx={{ width: '100%' }}>
+          Something was wrong, please try again!!
+        </Alert>
+      </Snackbar>
       <Grid
         item
         container
@@ -328,102 +401,117 @@ export const Contact = ({ setValue }) => {
         }}
       >
         <DialogContent>
-          <Grid container direction={'column'}>
-            <Grid item>
-              <Typography align='center' variant='h4' gutterBottom>
-                Confirm message
-              </Typography>
+          <form onSubmit={sendEmail} ref={form}>
+            <Grid container direction={'column'}>
+              <Grid item>
+                <Typography align='center' variant='h4' gutterBottom>
+                  Confirm message
+                </Typography>
+              </Grid>
+              <Grid item>
+                <TextField
+                  variant='standard'
+                  className={classes.input}
+                  label='Name'
+                  id='name'
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  fullWidth
+                  name='name'
+                />
+              </Grid>
+              <Grid item>
+                <TextField
+                  variant='standard'
+                  label='Email'
+                  id='email'
+                  value={email}
+                  onChange={onChange}
+                  fullWidth
+                  style={{ marginTop: '1em', marginBottom: '1em' }}
+                  error={emailHelper.length !== 0}
+                  helperText={emailHelper}
+                  name='email'
+                />
+              </Grid>
+              <Grid item>
+                <TextField
+                  variant='standard'
+                  label='Phone'
+                  id='phone'
+                  value={phone}
+                  onChange={onChange}
+                  fullWidth
+                  error={phoneHelper.length !== 0}
+                  helperText={phoneHelper}
+                  name='phone'
+                />
+              </Grid>
+              <Grid item style={{ maxWidth: matchesMD ? '100%' : '30em' }}>
+                <TextField
+                  className={classes.message}
+                  value={message}
+                  id='message'
+                  multiline
+                  rows={10}
+                  onChange={e => setMessage(e.target.value)}
+                  fullWidth
+                  name='message'
+                />
+              </Grid>
             </Grid>
-            <Grid item>
-              <TextField
-                variant='standard'
-                className={classes.input}
-                label='Name'
-                id='name'
-                value={name}
-                onChange={e => setName(e.target.value)}
-                fullWidth
-              />
+            <Grid
+              item
+              container
+              direction={matchesSM ? 'column' : 'row'}
+              style={{ marginTop: '2em' }}
+              alignItems='center'
+            >
+              <Grid item style={{ fontWeight: 300 }}>
+                <Button onClick={() => setOpen(false)}>Cancel</Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  type='submit'
+                  variant='contained'
+                  disabled={
+                    name.length === 0 ||
+                    message.length === 0 ||
+                    phone.length === 0 ||
+                    phoneHelper.length !== 0 ||
+                    email.length === 0 ||
+                    emailHelper.length !== 0 ||
+                    isSending
+                  }
+                  className={
+                    name.length === 0 ||
+                    message.length === 0 ||
+                    phone.length === 0 ||
+                    phoneHelper.length !== 0 ||
+                    email.length === 0 ||
+                    emailHelper.length !== 0
+                      ? classes.disabledButton
+                      : classes.sendButton
+                  }
+                >
+                  {isSending ? (
+                    <Box sx={{ display: 'flex' }}>
+                      <CircularProgress />
+                    </Box>
+                  ) : (
+                    <>
+                      Send Message
+                      <img
+                        style={{ marginLeft: '1em' }}
+                        src={airplane}
+                        alt='paper airplane'
+                      />
+                    </>
+                  )}
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item>
-              <TextField
-                variant='standard'
-                label='Email'
-                id='email'
-                value={email}
-                onChange={onChange}
-                fullWidth
-                style={{ marginTop: '1em', marginBottom: '1em' }}
-                error={emailHelper.length !== 0}
-                helperText={emailHelper}
-              />
-            </Grid>
-            <Grid item>
-              <TextField
-                variant='standard'
-                label='Phone'
-                id='phone'
-                value={phone}
-                onChange={onChange}
-                fullWidth
-                error={phoneHelper.length !== 0}
-                helperText={phoneHelper}
-              />
-            </Grid>
-            <Grid item style={{ maxWidth: matchesMD ? '100%' : '30em' }}>
-              <TextField
-                className={classes.message}
-                value={message}
-                id='message'
-                multiline
-                rows={10}
-                onChange={e => setMessage(e.target.value)}
-                fullWidth
-              />
-            </Grid>
-          </Grid>
-          <Grid
-            item
-            container
-            direction={matchesSM ? 'column' : 'row'}
-            style={{ marginTop: '2em' }}
-            alignItems='center'
-          >
-            <Grid item style={{ fontWeight: 300 }}>
-              <Button onClick={() => setOpen(false)}>Cancel</Button>
-            </Grid>
-            <Grid item>
-              <Button
-                variant='contained'
-                disabled={
-                  name.length === 0 ||
-                  message.length === 0 ||
-                  phone.length === 0 ||
-                  phoneHelper.length !== 0 ||
-                  email.length === 0 ||
-                  emailHelper.length !== 0
-                }
-                className={
-                  name.length === 0 ||
-                  message.length === 0 ||
-                  phone.length === 0 ||
-                  phoneHelper.length !== 0 ||
-                  email.length === 0 ||
-                  emailHelper.length !== 0
-                    ? classes.disabledButton
-                    : classes.sendButton
-                }
-                onClick={() => setOpen(true)}
-              >
-                Send Message{' '}
-                <img
-                  style={{ marginLeft: '1em' }}
-                  src={airplane}
-                  alt='paper airplane'
-                />{' '}
-              </Button>
-            </Grid>
-          </Grid>
+          </form>
         </DialogContent>
       </Dialog>
       <Grid
