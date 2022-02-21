@@ -13,6 +13,7 @@ import { Websites } from './Websites';
 import { Revolution } from './Revolution';
 import { About } from './About';
 import { Contact } from './Contact';
+import { Estimate } from './Estimate';
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -62,9 +63,5 @@ function App() {
     </ThemeProvider>
   );
 }
-
-const Estimate = () => {
-  return <div>Estimate</div>;
-};
 
 export default App;
