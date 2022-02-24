@@ -313,7 +313,7 @@ const websiteQuestions = [
 ];
 
 export const Estimate = () => {
-  const [questions, setQuestions] = useState(softwareQuestions);
+  const [questions, setQuestions] = useState(defaultQuestions);
 
   const classes = useStyles();
   const theme = useTheme();
@@ -369,6 +369,38 @@ export const Estimate = () => {
     return false;
   };
 
+  const handleSelect = id => {
+    const newQuestions = cloneDeep(questions);
+    const currentlyActive = newQuestions.filter(question => question.active);
+    const activeIndex = currentlyActive[0].id - 1;
+    const newSelected = newQuestions[activeIndex].options[id - 1];
+    const previousSelected = currentlyActive[0].options.filter(
+      option => option.selected
+    );
+    if (currentlyActive[0].subtitle === 'Select one.') {
+      if (previousSelected[0]) {
+        previousSelected[0].selected = !previousSelected[0].selected;
+      }
+      newSelected.selected = !newSelected.selected;
+    } else {
+      newSelected.selected = !newSelected.selected;
+      if (newSelected.title === 'Custom Software Development') {
+        setQuestions(softwareQuestions);
+        return;
+      }
+      if (newSelected.title === 'iOS/Android App Development') {
+        setQuestions(softwareQuestions);
+        return;
+      }
+      if (newSelected.title === 'Website Development') {
+        setQuestions(websiteQuestions);
+        return;
+      }
+      setQuestions(newQuestions);
+    }
+    setQuestions(newQuestions);
+  };
+
   return (
     <Grid container direction={'row'}>
       <Grid item container direction={'column'} lg>
@@ -402,6 +434,7 @@ export const Estimate = () => {
                     fontWeight: 500,
                     marginTop: '5em',
                     fontSize: '2.25rem',
+                    lineHeight: 1.25,
                   }}
                 >
                   {question.title}
@@ -417,8 +450,23 @@ export const Estimate = () => {
               </Grid>
               <Grid item container>
                 {question.options.map((option, index) => (
-                  <Grid item container direction={'column'} md>
-                    <Grid item style={{ maxWidth: '12em' }}>
+                  <Grid
+                    item
+                    container
+                    direction={'column'}
+                    md
+                    component={Button}
+                    style={{
+                      display: 'grid',
+                      textTransform: 'none',
+                      backgroundColor: option.selected
+                        ? theme.palette.common.orange
+                        : null,
+                      borderRadius: 0,
+                    }}
+                    onClick={() => handleSelect(option.id)}
+                  >
+                    <Grid item style={{ maxWidth: '14em' }}>
                       <Typography
                         variant='h6'
                         align='center'
