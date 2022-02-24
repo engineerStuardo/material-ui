@@ -336,7 +336,7 @@ export const Contact = ({ setValue }) => {
                 />
               </Grid>
             </Grid>
-            <Grid item style={{ maxWidth: '30em' }}>
+            <Grid item style={{ width: '30em' }}>
               <TextField
                 className={classes.message}
                 value={message}
@@ -395,8 +395,8 @@ export const Contact = ({ setValue }) => {
           style: {
             paddingTop: matchesMD ? '1em' : '5em',
             paddingBottom: matchesMD ? '1em' : '5em',
-            paddingRight: matchesMD ? 0 : matchesLG ? '10em' : '20em',
-            paddingLeft: matchesMD ? 0 : matchesLG ? '10em' : '20em',
+            paddingRight: matchesMD ? 0 : matchesLG ? '15em' : '25em',
+            paddingLeft: matchesMD ? 0 : matchesLG ? '15em' : '25em',
           },
         }}
       >
@@ -447,7 +447,7 @@ export const Contact = ({ setValue }) => {
                   name='phone'
                 />
               </Grid>
-              <Grid item style={{ maxWidth: matchesMD ? '100%' : '30em' }}>
+              <Grid item style={{ width: matchesMD ? '100%' : '30em' }}>
                 <TextField
                   className={classes.message}
                   value={message}
