@@ -7,6 +7,9 @@ import {
   useMediaQuery,
   IconButton,
   Button,
+  Dialog,
+  DialogContent,
+  TextField,
 } from '@mui/material';
 import { cloneDeep } from 'lodash';
 
@@ -54,6 +57,10 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       backgroundColor: `${theme.palette.secondary.light} !important`,
     },
+  },
+  message: {
+    marginTop: '5em !important',
+    borderRadius: '5 !important',
   },
 }));
 
@@ -314,6 +321,13 @@ const websiteQuestions = [
 
 export const Estimate = () => {
   const [questions, setQuestions] = useState(defaultQuestions);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [message, setMessage] = useState('');
+  const [emailHelper, setEmailHelper] = useState('');
+  const [phoneHelper, setPhoneHelper] = useState('');
 
   const classes = useStyles();
   const theme = useTheme();
@@ -399,6 +413,38 @@ export const Estimate = () => {
       setQuestions(newQuestions);
     }
     setQuestions(newQuestions);
+  };
+
+  const onChange = e => {
+    let valid;
+
+    if (e.target.id === 'email') {
+      setEmail(e.target.value);
+      valid = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
+        e.target.value
+      );
+
+      if (!valid) {
+        setEmailHelper('Invalid email');
+      } else {
+        setEmailHelper('');
+      }
+      return;
+    }
+
+    if (e.target.id === 'phone') {
+      setPhone(e.target.value);
+      valid = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(
+        e.target.value
+      );
+
+      if (!valid) {
+        setPhoneHelper('Invalid Phone');
+      } else {
+        setPhoneHelper('');
+      }
+      return;
+    }
   };
 
   return (
@@ -528,11 +574,87 @@ export const Estimate = () => {
           </Grid>
         </Grid>
         <Grid item>
-          <Button variant='contained' className={classes.estimateButton}>
+          <Button
+            variant='contained'
+            className={classes.estimateButton}
+            onClick={() => setIsDialogOpen(true)}
+          >
             Get Estimate
           </Button>
         </Grid>
       </Grid>
+      <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
+        <Grid container justifyContent={'center'}>
+          <Grid item>
+            <Typography variant='h2' align='center'>
+              Estimate
+            </Typography>
+          </Grid>
+        </Grid>
+        <DialogContent>
+          <Grid container>
+            <Grid item container direction={'column'}>
+              <Grid item>
+                <TextField
+                  variant='standard'
+                  className={classes.input}
+                  label='Name'
+                  id='name'
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item>
+                <TextField
+                  variant='standard'
+                  label='Email'
+                  id='email'
+                  value={email}
+                  onChange={onChange}
+                  fullWidth
+                  style={{ marginTop: '1em', marginBottom: '1em' }}
+                  error={emailHelper.length !== 0}
+                  helperText={emailHelper}
+                />
+              </Grid>
+              <Grid item>
+                <TextField
+                  variant='standard'
+                  label='Phone'
+                  id='phone'
+                  value={phone}
+                  onChange={onChange}
+                  fullWidth
+                  error={phoneHelper.length !== 0}
+                  helperText={phoneHelper}
+                />
+              </Grid>
+            </Grid>
+            <Grid item style={{ maxWidth: '30em' }}>
+              <TextField
+                className={classes.message}
+                value={message}
+                id='message'
+                multiline
+                rows={10}
+                onChange={e => setMessage(e.target.value)}
+                fullWidth
+              />
+            </Grid>
+            <Grid item>
+              <Typography variant='body1' paragraph>
+                We can create this digital solution for an estimated
+              </Typography>
+              <Typography variant='body1' paragraph>
+                Fill out your name, phone number and email, place your request,
+                and we'll get back to you with details moving forward and a
+                final price.
+              </Typography>
+            </Grid>
+          </Grid>
+        </DialogContent>
+      </Dialog>
     </Grid>
   );
 };
